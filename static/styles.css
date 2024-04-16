@@ -1,0 +1,270 @@
+:root {
+    --background-color: linear-gradient(315deg, #4b3f72 0%, #2c234d 74%);
+    --footer: #1A1627;
+    --onfooter: #2B2541;
+    --header: #7C729F;
+    --button: #ADA4CC;
+    --lighter-header: #9D91C3;
+    /* Lighter shade of purple for the top of the navbar */
+    --background-color-start: #4b3f72;
+    /* Start color for background gradient */
+    --background-color-end: #2c234d;
+}
+
+body,
+html {
+    height: auto;
+    margin: 0;
+    min-height: 100vh;
+
+    background: var(--background-color);
+    user-select: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    font-weight: bold;
+    color: white;
+    font-size: xx-large;
+}
+
+p {
+    font-size: large;
+    color: white;
+    padding-bottom: 6%;
+}
+
+.full-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    user-select: none;
+    margin-top: 200px;
+}
+
+.body-container{
+    width: 90%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    margin: auto; /* Centers within the full-center */
+    text-align: left;
+    padding: 20px; /* Padding around content */
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.bounce-on-hover:hover {
+    animation: bounce 0.5s infinite;
+    text-decoration: none;
+}
+
+.credit-item {
+    background-color: var(--onfooter);
+    padding-top: 0.5rem;
+    /* py-2 */
+    padding-left: 2rem;
+    /* px-8 */
+    padding-right: 2rem;
+    /* px-8 */
+    border-radius: 0.375rem;
+    /* rounded */
+    margin: 0 10px;
+    /* Adjust margin between items as needed */
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.credit-item p,
+.credit-item a {
+    font-size: medium;
+    display: inline-block;
+    color: inherit;
+    /* Inherit text color */
+
+}
+
+
+.credit-item i {
+    display: inline-block;
+    vertical-align: text-top;
+    /* Align elements vertically */
+    margin-left: 5px;
+    margin-top: 8px;
+    /* Adjust margin between text and icon as needed */
+}
+
+.credits {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--footer);
+    padding: 10px 0;
+    /* Adjust padding as needed */
+    box-sizing: border-box;
+    /* Ensure padding is included in width */
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+
+
+#domainInput {
+    color: rgba(128, 128, 128, 0.801);
+    width: 100%;
+    max-width: 32rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    outline: none;
+
+}
+
+#domainInput:focus {
+    box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.5), 0 0 0 4px rgba(78, 115, 223, 0.5);
+}
+
+nav {
+    background: linear-gradient(to bottom, var(--lighter-header), var(--background-color-start)), linear-gradient(315deg, var(--background-color-start) 0%, var(--background-color-end) 74%);
+    user-select: none;
+    padding: 2rem;
+    font-size: large;
+    color: var(--footer);
+}
+
+.container {
+    text-align: right;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px; /* or whatever size you prefer */
+    width: auto;
+}
+
+.nav-links a {
+    padding: 0 15px; /* Adjust as needed */
+    /* Other styling */
+}
+
+.logo{
+    height: 65px;
+}
+.container a:not(:last-child)::after {
+    content: '⋮'; 
+    margin-left: 25px;
+    margin-right: 5px;
+    color: var(--footer); /* This sets the color of the bars */
+    font-size: 40px; /* Adjust the size of the bar */
+    font-weight:lighter;
+    line-height: 0; /* Align the bar vertically */
+    display: inline-block; /* Allows the height to be adjusted */
+    vertical-align: top; /* Aligns the bar vertically */
+    padding-top: .3em; /* Adjust space on the top, if necessary */
+    padding-bottom: .3em; /* Adjust space on the bottom, if necessary */
+}
+
+
+
+button {
+    margin-top: 1rem;
+    /* mt-4 */
+    background-color: transparent;
+    /* hover:bg-purple-800 */
+    color: #fff;
+    /* text-white */
+    font-weight: bold;
+    /* font-bold */
+    padding-top: 0.5rem;
+    /* py-2 */
+    padding-bottom: 0.5rem;
+    /* py-2 */
+    padding-left: 2rem;
+    /* px-8 */
+    padding-right: 2rem;
+    /* px-8 */
+    border-radius: 0.375rem;
+    /* rounded */
+    background-color: var(--button);
+    color: var(--background-color);
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 70px; /* Space between entries */
+}
+
+.person p {
+    flex: 1;
+    margin-right: 20px; /* Space between text and image */
+}
+
+.person img {
+    width: 240px; /* Adjust based on your preference */
+    height: 240px; /* Adjust based on your preference */
+    border-radius: 50%; /* Creates a circle */
+    object-fit: cover; /* Ensures the image covers the circle */
+}
+
+
+button:hover {
+    background-color: var(--footer);
+    color: var(--button);
+}
+
+
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.p-2 {
+    padding: 0.5rem;
+}
+
+.p-2:hover {
+    color: white;
+    text-decoration: none;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
