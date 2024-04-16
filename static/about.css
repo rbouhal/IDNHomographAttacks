@@ -1,0 +1,78 @@
+:root {
+    --background-color: linear-gradient(315deg, #4b3f72 0%, #2c234d 74%);
+    --footer: #1A1627;
+    --onfooter: #2B2541;
+    --header: #7C729F;
+    --button: #ADA4CC;
+    --lighter-header: #9D91C3;
+    /* Lighter shade of purple for the top of the navbar */
+    --background-color-start: #4b3f72;
+    /* Start color for background gradient */
+    --background-color-end: #2c234d;
+}
+
+
+
+.person {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 80px;
+    animation: animate-in-and-out 5s ease-in-out;
+}
+
+.person p {
+    flex: 1;
+    margin-right: 20px; /* Space between text and image */
+}
+
+.person img {
+    width: 240px; /* Adjust based on your preference */
+    height: 240px; /* Adjust based on your preference */
+    border-radius: 50%; /* Creates a circle */
+    object-fit: cover; /* Ensures the image covers the circle */
+    box-shadow: 0 0 30px #ADA4CC;
+}
+
+.person img:hover{
+    transform: scale(1.05);
+}
+
+.person {
+    opacity: 0; /* Initially hide the element */
+    transition: opacity 0.5s ease; /* Smooth transition for opacity change */
+}
+
+.person.visible {
+    opacity: 1; /* Make the element visible */
+}
+
+
+.convo {
+    position: relative; /* Needed for absolute positioning of the triangle */
+    color: var(--footer);
+    background-color: var(--lighter-header);
+    padding: 20px 50px;
+    border-radius: 50px;
+}
+
+.convo:after {
+    display: block;
+    content: '';
+    position: absolute;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--lighter-header);
+    top: 50%;
+    right: -30px; 
+    transform: translateY(-50%);
+}
+
+.body-container{
+    width: 90%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    margin: auto; /* Centers within the full-center */
+    text-align: left;
+    padding: 20px; /* Padding around content */
+}
+

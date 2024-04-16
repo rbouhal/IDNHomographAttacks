@@ -1,0 +1,29 @@
+:root {
+    --background-color: linear-gradient(315deg, #4b3f72 0%, #2c234d 74%);
+    --footer: #1A1627;
+    --onfooter: #2B2541;
+    --header: #7C729F;
+    --button: #ADA4CC;
+    --lighter-header: #9D91C3;
+    /* Lighter shade of purple for the top of the navbar */
+    --background-color-start: #4b3f72;
+    /* Start color for background gradient */
+    --background-color-end: #2c234d;
+}
+
+.body-container{
+    width: 90%; /* Adjust based on preference */
+    max-width: 900px; /* Adjust based on preference */
+    margin: auto; /* Centers within the full-center */
+    text-align: left;
+    padding: 20px; /* Padding around content */
+}
+
+.full-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    user-select: none;
+    margin-top: 200px;
+}

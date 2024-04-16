@@ -7,6 +7,7 @@
     <title>About Us - IDN Homograph Attack Detector</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
     <link href="/static/styles.css" rel="stylesheet">
+    <link href="/static/about.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/815a144f2f.js" crossorigin="anonymous"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon_package_v0.16/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon_package_v0.16/favicon-32x32.png">
@@ -34,39 +35,24 @@
     <div>
         <div class="body-container">
             <h1>About Us</h1>
-            <p>We are a team dedicated to enhancing online security. Our mission is to protect users from IDN homograph
-                attacks by providing a robust detection system.</p>
+            <p>We are a team dedicated to <strong>enhancing online security</strong>. Our mission is to protect users from IDN homograph attacks by providing a robust detection system.</p>
             <div class="person">
-                <p>
-                    Hello! My name is Rayan Bouhal. I am a Computer Science student at Virginia Tech, where I conduct
-                    research in computer vision under Dr. Hoda Eldardiry at The Machine Learning Laboratory. My academic
-                    interests include software development, computer vision, and cloud computing. Outside of my studies,
-                    I enjoy soccer, swimming, and cooking. I support FC Barcelona, a team I have followed since
-                    childhood. My family, particularly my older sister and father who are in the software engineering
-                    field, serve as my professional inspirations. I aspire to use my abilities to contribute positively
-                    to society and create a lasting impact.</p>
+                <p class="convo">
+                    Hello! My name is <strong>Rayan Bouhal</strong>. I am a <strong>Computer Science student</strong> at Virginia Tech, where I conduct research in  <strong>computer vision</strong> under Dr. Hoda Eldardiry at The Machine Learning Laboratory. My academic interests include <strong>software development, computer vision, and cloud computing</strong>. Outside of my studies, I enjoy soccer, swimming, and cooking. I support FC Barcelona, a team I have followed since childhood. My family, particularly my older sister and father who are in the software engineering field, serve as my professional inspirations. I aspire to <strong>use my abilities to contribute positively to society and create a lasting impact</strong>.</p>
                 <img src="/static/rayan.jpg" alt="Rayan Bouhal">
             </div>
-
-            <div class="person">
-                <p>Hello! My name is Angelie Nguyen. I am a junior majoring in Computer Engineering with a minor in
-                    Computer Science. I am passionate about sociotechnical innovation and navigating the balance between
-                    technology's impact and its integration into our daily lives. Some of my interests include computer
-                    vision, robotics, and generative AI.</p>
+        
+            <div class="person ">
+                <p class="convo">Hello! My name is <strong>Angelie Nguyen</strong>. I am a <strong>junior majoring in Computer Engineering</strong> with a minor in Computer Science. I am passionate about <strong>sociotechnical innovation</strong> and navigating the balance between technology's impact and its integration into our daily lives. Some of my interests include <strong>computer vision, robotics, and generative AI</strong>.</p>
                 <img src="/static/angelie.png" alt="Angelie Nguyen">
             </div>
-
-            <div class="person">
-                <p>Hello! My name is Andrew Merdes. I am currently a Computer Engineer at Virginia Tech pursuing a minor
-                    in Computer Science. My interests related to the field are digital design with FPGAs, Machine
-                    Learning, and Artificial Intelligence. My other hobbies include listening to music, playing the
-                    keyboard, pickleball, ping-pong, going on hikes, and doing parkour. I have three younger siblings. I
-                    have also moved around the U.S. a total of 6 times.</p>
+        
+            <div class="person ">
+                <p class="convo">Hello! My name is <strong>Andrew Merdes</strong>. I am currently a <strong>Computer Engineer</strong> at Virginia Tech pursuing a minor in Computer Science. My interests related to the field are <strong>digital design with FPGAs, Machine Learning, and Artificial Intelligence</strong>. My other hobbies include listening to music, playing the keyboard, pickleball, ping-pong, going on hikes, and doing parkour. I have three younger siblings. I have also moved around the U.S. a total of 6 times.</p>
                 <img src="/static/andrew.jpg" alt="Andrew Merdes">
             </div>
-
-
         </div>
+        
     </div>
     <!-- Include the credits and script tag from the index.html -->
     <div class="credits">
@@ -89,6 +75,45 @@
             </a>
         </div>
     </div>
+
+    <script>
+       // Function to check if an element is in the viewport
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// Function to handle scroll event
+function handleScroll() {
+    const persons = document.querySelectorAll('.person');
+    persons.forEach(person => {
+        if (isInViewport(person)) {
+            person.classList.add('visible');
+        } else {
+            person.classList.remove('visible');
+        }
+    });
+}
+
+// Attach scroll event listener
+window.addEventListener('scroll', handleScroll);
+
+// Trigger initial check on page load
+handleScroll();
+
+const bodyContainer = document.querySelector('.body-container');
+const naturalHeight = bodyContainer.offsetHeight; // Get the natural height of the body-container
+const additionalHeight = 300; // Additional height to be added
+bodyContainer.style.height = `calc(${naturalHeight}px + ${additionalHeight}px)`; // Set the height with additional height
+
+
+    </script>
+        
 </body>
 
 </html>
