@@ -98,6 +98,13 @@ def train_model():
 
     #train the model using the training sets
     model.fit(XTrain, yTrain)
+    
+    #*get accuracy using cross validation*
+    #10 folds
+    scores = cross_val_score(model, X, y, cv=10)
+    
+    accuracy = scores.mean()
+
 
 # Implement ML modle here given the domain, based on prediction be sure to return 'valid' or 'invalid'
 def predict_domain_validity(domain):
@@ -119,7 +126,7 @@ def predict_domain_validity(domain):
 
     #predict the validity
     prediction = model.predict(domain_df)
-
+    
     #return 'valid' if prediction is 1, 'invalid' otherwise
     return 'valid' if prediction[0] == 1 else 'invalid'
 
