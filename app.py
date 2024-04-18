@@ -2,8 +2,16 @@ from flask import Flask, render_template, request, jsonify
 import string
 import csv
 import os
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import cross_val_score
+import math
+import pandas as pd
 
 app = Flask(__name__)
+
+# Global variable for the model
+model = None
 
 # Renders the Home page
 @app.route('/')
@@ -68,9 +76,54 @@ def write_to_csv(domain_data, validity):
             writer.writeheader()
         writer.writerow(domain_data)
 
+#train model
+def train_model():
+    global model
+    #concatenate the two dataframes
+    df1 = pd.read_csv('static/valid-domains.csv')
+    df2 = pd.read_csv('static/invalid-domains.csv')
+    df1['validity'] = 1
+    df2['validity'] = 0
+    df = pd.concat([df1, df2])
+
+    #prepare the data
+    X = df[['domain_length', 'domain_char_count','domain_digit_count','repeated_chars','repeated_digits', 'non_ascii_char_count']]
+    y = df['validity']
+
+    #split the dataset into training set and test set
+    XTrain, XTest, yTrain, yTest = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    #create a DecisionTreeClassifier object
+    model = DecisionTreeClassifier()
+
+    #train the model using the training sets
+    model.fit(XTrain, yTrain)
+
 # Implement ML modle here given the domain, based on prediction be sure to return 'valid' or 'invalid'
 def predict_domain_validity(domain):
-    return 'valid' if sum(c.isalpha() for c in domain) > sum(c.isdigit() for c in domain) else 'invalid'
+
+    #return 'valid' if sum(c.isalpha() for c in domain) > sum(c.isdigit() for c in domain) else 'invalid'
+    global model
+    # ensure the model is trained
+    if model is None:
+        return 'Model not trained'
+
+    #get the characteristics of the domain
+    domain_data = calculate_domain_characteristics(domain)
+    #remove 'domain' and 'domain_tld' from the dictionary as not needed in model
+    domain_data.pop('domain', None)
+    domain_data.pop('domain_tld', None)
+
+    #convert to DataFrame
+    domain_df = pd.DataFrame([domain_data])
+
+    #predict the validity
+    prediction = model.predict(domain_df)
+
+    #return 'valid' if prediction is 1, 'invalid' otherwise
+    return 'valid' if prediction[0] == 1 else 'invalid'
 
 if __name__ == '__main__':
+    #train model before running app
+    train_model()
     app.run(debug=True)
