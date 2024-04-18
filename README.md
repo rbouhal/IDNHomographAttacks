@@ -1,22 +1,22 @@
-<p>
-  <img src="static/logo.png" alt="logo" style="width: 45%; display: inline;">
-  <span style="font-size: 80px; font-weight: bold; vertical-align: top;"> Homograph Attacks</span>
-</p>
 
-![Homograph](https://drive.google.com/uc?export=view&id=1_-yHBRthFnKFq8l_MFRfYM-6oWvKNbco){: width="45%"}
+  <img src="static/logo.png" alt="logo" style="height: 90px; display: flex;">
+
+
+
+<img src="https://drive.google.com/uc?export=view&id=1_-yHBRthFnKFq8l_MFRfYM-6oWvKNbco" alt="Homograph" width="45%">
 We aim to tackle the issue of homograph attacks on internationalized domain names. These attacks often involve subtle modifications, such as altering individual characters or the font used in the domain name. By creating these deceptive domain names, scammers exploit unknowing users via email and various other communication methods. Here is an example bellow.
-![Homograph](https://drive.google.com/uc?export=view&id=1YQ1FDz7DeF5LCPIXZTO4siiOBsuEDvkG){: width="45%"}
+<img src="https://drive.google.com/uc?export=view&id=1YQ1FDz7DeF5LCPIXZTO4siiOBsuEDvkG" alt="Homograph" width="45%">
 
 ## Data Collection and Parsing 
 List of Top 1 Million Domains: <a href="https://github.com/mozilla/cipherscan/tree/master/top1m">
-    <img src="https://icones.pro/wp-content/uploads/2021/06/cliquez-sur-l-icone-violet.png" alt="Click Icon" style="width: 7%;">
+    <img src="https://icones.pro/wp-content/uploads/2021/06/cliquez-sur-l-icone-violet.png" alt="Click Icon" style="width: 5%;">
 </a>
 
 
 
 
 List of Malicious Domains: <a href="https://cert.pl/en/posts/2020/03/malicious_domains/">
-    <img src="https://icones.pro/wp-content/uploads/2021/06/cliquez-sur-l-icone-violet.png" alt="Click Icon" style="width: 7%;">
+    <img src="https://icones.pro/wp-content/uploads/2021/06/cliquez-sur-l-icone-violet.png" alt="Click Icon" style="width: 5%;">
 </a>
 
 
