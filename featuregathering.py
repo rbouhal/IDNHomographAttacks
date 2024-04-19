@@ -26,7 +26,7 @@ def has_repeated_chars(s, char_type):
 def count_non_ascii_chars(s):
     return sum(1 for c in s if ord(c) > 127)
 
-def process_domains(rows):
+def process_domains(rows, label):
     for row in rows:
         domain = row['domain']
         row['domain_length'] = len(domain)
@@ -40,19 +40,20 @@ def process_domains(rows):
         row['domain_tld'] = domain[first_dot_index+1:] if first_dot_index != -1 else ''
         row['repeated_chars'] = 1 if has_repeated_chars(base_domain, 'alpha') else 0
         row['repeated_digits'] = 1 if has_repeated_chars(base_domain, 'digit') else 0
+        row['domain_label'] = label  # Add domain label based on file type (valid = 1, invalid = 0)
 
 def write_data(csv_file_path, rows):
-    fieldnames = ['domain', 'domain_length', 'domain_char_count', 'domain_digit_count', 'repeated_chars', 'repeated_digits', 'non_ascii_char_count', 'domain_tld']
+    fieldnames = ['domain', 'domain_length', 'domain_char_count', 'domain_digit_count', 'repeated_chars', 'repeated_digits', 'non_ascii_char_count', 'domain_tld', 'domain_label']
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as file:  # Specify UTF-8 encoding
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
 def main():
-    csv_files = ['static/valid-domains.csv', 'static/invalid-domains.csv']
-    for file_path in csv_files:
+    csv_files = [('static/valid-domains.csv', 1), ('static/invalid-domains.csv', 0)]
+    for file_path, label in csv_files:
         rows = read_data(file_path)
-        process_domains(rows)
+        process_domains(rows, label)
         write_data(file_path, rows)
 
 if __name__ == "__main__":

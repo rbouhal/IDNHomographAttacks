@@ -43,6 +43,7 @@ def process_domain(domain):
     validity, accuracy = predict_domain_validity(domain, prediction_domain_data)
     print(accuracy)
     print(validity)
+    domain_data['domain_label'] = 1 if validity == 'valid' else 0
     write_to_csv(domain_data, validity, accuracy)
     return domain_data, validity, accuracy
 
@@ -85,13 +86,11 @@ def train_model(model):
     #concatenate the two dataframes
     df1 = pd.read_csv('static/valid-domains.csv')
     df2 = pd.read_csv('static/invalid-domains.csv')
-    df1['validity'] = 1
-    df2['validity'] = 0
     df = pd.concat([df1, df2])
 
     #prepare the data
     X = df[['domain_length', 'domain_char_count','domain_digit_count','repeated_chars','repeated_digits', 'non_ascii_char_count']]
-    y = df['validity']
+    y = df['domain_label']
 
     #split the dataset into training set and test set
     XTrain, XTest, yTrain, yTest = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -108,7 +107,6 @@ def train_model(model):
 # Implement ML modle here given the domain, based on prediction be sure to return 'valid' or 'invalid'
 def predict_domain_validity(domain, domain_data):
     model = None
-    #return 'valid' if sum(c.isalpha() for c in domain) > sum(c.isdigit() for c in domain) else 'invalid'
     trained_model, X, y = train_model(model)
     
     # ensure the model is trained
