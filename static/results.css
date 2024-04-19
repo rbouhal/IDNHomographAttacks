@@ -1,0 +1,54 @@
+:root {
+    --background-color: linear-gradient(315deg, #4b3f72 0%, #2c234d 74%);
+    --footer: #1A1627;
+    --onfooter: #2B2541;
+    --header: #7C729F;
+    --button: #ADA4CC;
+    --lighter-header: #9D91C3;
+    --background-color-start: #4b3f72;
+    --background-color-end: #2c234d;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-around; /* Ensures space around items if they don't occupy all space */
+    align-items: center; /* Align the items vertically in the center */
+    padding: 0 500px; /* Adds padding on both sides */
+    margin-top: 20px;
+}
+
+.body-container {
+    flex-basis: 50%; /* Explicitly define the base width */
+    max-width: 900px; /* Optional: limit the content width */
+    padding: 20px;
+    color: white;
+    text-align: left;
+}
+
+.chart {
+    flex-basis: 50%; /* Explicitly define the base width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    position: relative;
+}
+
+.chart-percentage {
+    position: absolute;
+    width: 100%;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+
+
+h1 {
+    padding-bottom: 6%;
+}
+
+.body-container p {
+    margin: 0;
+    line-height: 1.1;
+    padding-bottom: 12px;
+}

@@ -12,9 +12,6 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# Global variable for the model
-model = None
-
 # Renders the Home page
 @app.route('/')
 def home():
@@ -33,17 +30,21 @@ def how_it_works():
 # Retrieves the domain from the user input
 @app.route('/check_domain', methods=['POST'])
 def check_domain():
-    data = request.get_json()
-    domain = data.get('domain', 'No domain provided')
+    domain = request.form['domain']
     print(domain)
-    process_domain(domain)
-    return jsonify(message=f"Checking safety for domain: {domain}")
+    domain_data, validity, accuracy = process_domain(domain)
+    return render_template('result.html', domain=domain, validity=validity, accuracy=accuracy*100, details=domain_data)
 
 # Processess the domain for feature extraction and prediction
 def process_domain(domain):
     domain_data = calculate_domain_characteristics(domain)
-    validity = predict_domain_validity(domain)
-    write_to_csv(domain_data, validity)
+    # Create a copy of domain_data for prediction purposes
+    prediction_domain_data = {key: value for key, value in domain_data.items()}
+    validity, accuracy = predict_domain_validity(domain, prediction_domain_data)
+    print(accuracy)
+    print(validity)
+    write_to_csv(domain_data, validity, accuracy)
+    return domain_data, validity, accuracy
 
 # Calculates the domain features
 def calculate_domain_characteristics(domain):
@@ -68,19 +69,19 @@ def count_non_ascii_chars(s):
     return sum(1 for c in s if ord(c) > 127)
 
 # Write's the domain + calculated characteristics to the respective csv file
-def write_to_csv(domain_data, validity):
-    filename = 'static/valid-domains.csv' if validity == 'valid' else 'static/invalid-domains.csv'
-    fieldnames = list(domain_data.keys())
-    write_header = not os.path.exists(filename) or os.stat(filename).st_size == 0
-    with open(filename, mode='a', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        if write_header:
-            writer.writeheader()
-        writer.writerow(domain_data)
+def write_to_csv(domain_data, validity, accuracy):
+    if accuracy >= .75:
+        filename = 'static/valid-domains.csv' if validity == 'valid' else 'static/invalid-domains.csv'
+        fieldnames = list(domain_data.keys())
+        write_header = not os.path.exists(filename) or os.stat(filename).st_size == 0
+        with open(filename, mode='a', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            if write_header:
+                writer.writeheader()
+            writer.writerow(domain_data)
 
 #train model
-def train_model():
-    global model
+def train_model(model):
     #concatenate the two dataframes
     df1 = pd.read_csv('static/valid-domains.csv')
     df2 = pd.read_csv('static/invalid-domains.csv')
@@ -100,23 +101,20 @@ def train_model():
 
     #train the model using the training sets
     model.fit(XTrain, yTrain)
+    return model, X, y
    
 
 
 # Implement ML modle here given the domain, based on prediction be sure to return 'valid' or 'invalid'
-def predict_domain_validity(domain):
-
+def predict_domain_validity(domain, domain_data):
+    model = None
     #return 'valid' if sum(c.isalpha() for c in domain) > sum(c.isdigit() for c in domain) else 'invalid'
-    global model
-    global X
-    global y
+    trained_model, X, y = train_model(model)
     
     # ensure the model is trained
-    if model is None:
+    if trained_model is None:
         return 'Model not trained'
 
-    #get the characteristics of the domain
-    domain_data = calculate_domain_characteristics(domain)
     #remove 'domain' and 'domain_tld' from the dictionary as not needed in model
     domain_data.pop('domain', None)
     domain_data.pop('domain_tld', None)
@@ -125,18 +123,15 @@ def predict_domain_validity(domain):
     domain_df = pd.DataFrame([domain_data])
 
     #predict the validity
-    prediction = model.predict(domain_df)
+    prediction = trained_model.predict(domain_df)
     
     #*get accuracy using cross validation*
     #10 folds
-    scores = cross_val_score(model, X, y, cv=10)
-    
+    scores = cross_val_score(trained_model, X, y, cv=10)
     accuracy = scores.mean()
     
     #return 'valid' if prediction is 1, 'invalid' otherwise
-    return 'valid' if prediction[0] == 1 else 'invalid'
+    return 'valid' if prediction[0] == 1 else 'invalid', accuracy
 
 if __name__ == '__main__':
-    #train model before running app
-    train_model()
     app.run(debug=True)

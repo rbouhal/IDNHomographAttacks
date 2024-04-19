@@ -11,7 +11,9 @@
     --background-color-end: #2c234d;
 }
 
-
+p {
+    padding-bottom: 6%;
+}
 
 .person {
     display: flex;

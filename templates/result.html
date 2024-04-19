@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDN Homograph Attack Detector</title>
+    <title>Domain Check Result</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
     <link href="/static/styles.css" rel="stylesheet">
-    <link href="/static/index.css" rel="stylesheet">
+    <link href="/static/results.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/815a144f2f.js" crossorigin="anonymous"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon_package_v0.16/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon_package_v0.16/favicon-32x32.png">
@@ -32,17 +32,28 @@
             </div>
         </div>
     </nav>
-
-    <div class="full-center">
-        <div class="text-center">
-            <h1>Check Domain Safety</h1>
-            <p>Enter a domain to check if it's safe from IDN homograph attacks.</p>
-            <form action="/check_domain" method="post">
-                <input type="text" id="domainInput" name="domain" placeholder="Enter domain here..." required>
-                <button type="submit">Is this domain safe?</button>
-            </form>
+   
+    
+    <div class="flex-container">
+        <div class="body-container">
+            <h1>Check Domain Results</h1>
+            <p>Domain: {{ domain }}</p>
+            <p>Validity: {{ validity }}</p>
+            <p>Additional Details:</p>
+            <ul>
+                <li>Character Count: {{ details.domain_char_count }}</li>
+                <li>Digit Count: {{ details.domain_digit_count }}</li>
+                <li>Repeated Characters: {{ details.repeated_chars }}</li>
+                <li>Non-ASCII Characters: {{ details.non_ascii_char_count }}</li>
+                <li>Top-Level Domain: {{ details.domain_tld }}</li>
+            </ul>
+        </div>
+        
+        <div class="chart" data-percent="{{ accuracy | round(2) }}">
+            <span class="chart-percentage"></span>
         </div>
     </div>
+
     <div class="credits">
         <div class="credit-item">
             <a href="https://www.linkedin.com/in/rayanbouhal" target="_blank">
@@ -64,31 +75,34 @@
         </div>
     </div>
 
+    <script src="/static/easypiechart.js"></script>
 
 
     <script>
-        function checkDomain() {
-            const domain = document.getElementById('domainInput').value;
-            if (domain) {
-                fetch('/check_domain', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ domain: domain })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Assuming server sends a URL to navigate to
-                        window.location.href = '/result';  // Adjust URL as needed
-                    })
-                    .catch(error => console.error('Error:', error));
-            } else {
-                alert('Please enter a domain name.');
-            }
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            var element = document.querySelector('.chart');
+            var validity = '{{ validity }}';  // Get the validity from the server-side
+            var barColor = validity === 'valid' ? '#3aba58' : '#ff0000';  // Green if valid, red if invalid
 
+            new EasyPieChart(element, {
+                scaleColor: false,
+                lineWidth: 20,
+                trackColor: '#9D91C3',
+                barColor: barColor,  // Use the dynamically set color based on validity
+                size: 200,
+                animate: {
+                    duration: 1500,
+                    enabled: true
+                },
+                onStep: function (from, to, percent) {
+                    this.el.querySelector('.chart-percentage').innerHTML = Math.round(percent) + '%';
+                }
+            });
+        });
     </script>
+
+
+
 </body>
 
 </html>
