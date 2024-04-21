@@ -162,9 +162,10 @@ def trainID3():
     return ID3(fullData, ctLst, valCount, totalCount - valCount, tree, level)
 #predicts a domain using the ID3 algorithm given a csv data array
 #if the funciton returns 1, domain is valid, if it returns 0 it is invalid
-def predict_ID3(csvInput):
+def predict_ID3(domain):
   tree = trainID3()
-  input = np.array(csvInput)
+  csvInput =  calculate_domain_characteristics(domain)
+  input = np.array(list(csvInput))
   conIn = inputConversion(input)
   return ID3Classify(conIn, tree)
 
