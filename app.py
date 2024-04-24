@@ -46,10 +46,10 @@ def process_domain(domain):
     print(validity)
     domain_data['domain_label'] = 1 if validity == 'valid' else 0
     write_to_csv(domain_data, validity, accuracy)
-    
-    #Run the ID3 algorithm on the domain
-    pred, acc = predict_ID3(domain)
-    print(acc)
+
+    #Run the ID3 algorithm on the domain and display the new entropy
+    pred, upEntropy = predict_ID3(domain)
+    print(upEntropy)
     
     return domain_data, validity, accuracy
 
@@ -164,17 +164,21 @@ def trainID3():
     tree = []
     level = 0
     #train the model using formated data
-    return ID3(fullData, ctLst, valCount, totalCount - valCount, tree, level)
+    return ID3(fullData, ctLst, valCount, totalCount - valCount, tree, level), valCount, totalCount - valCount
 #predicts a domain using the ID3 algorithm given a csv data array
 #if the funciton returns 1, domain is valid, if it returns 0 it is invalid
 #also returns a previously calculated accuracy
 def predict_ID3(domain):
-  tree = trainID3()
+  tree, class1, class0 = trainID3()
   csvInput =  calculate_domain_characteristics(domain)
   input = np.array(list(csvInput))
   conIn = inputConversion(input)
-  acc = 0.75
-  return ID3Classify(conIn, tree), acc
+  classificaiton = ID3Classify(conIn, tree)
+  if classificaiton == 0:
+    currEntropy = entropy(class0 + 1, class1)
+  else:
+    currEntropy = entropy(class0, class1 + 1)
+  return classificaiton, currEntropy
 
 
 #this function converts some of the data features to a binary format
