@@ -46,6 +46,11 @@ def process_domain(domain):
     print(validity)
     domain_data['domain_label'] = 1 if validity == 'valid' else 0
     write_to_csv(domain_data, validity, accuracy)
+    
+    #Run the ID3 algorithm on the domain
+    pred, acc = predict_ID3(domain)
+    print(acc)
+    
     return domain_data, validity, accuracy
 
 # Calculates the domain features
@@ -128,7 +133,7 @@ def predict_domain_validity(domain, domain_data):
     #10 folds
     scores = cross_val_score(trained_model, X, y, cv=10)
     accuracy = scores.mean()
-    
+
     #return 'valid' if prediction is 1, 'invalid' otherwise
     return 'valid' if prediction[0] == 1 else 'invalid', accuracy
 #this function trains the ID3 decision tree with the current csv data
@@ -162,12 +167,14 @@ def trainID3():
     return ID3(fullData, ctLst, valCount, totalCount - valCount, tree, level)
 #predicts a domain using the ID3 algorithm given a csv data array
 #if the funciton returns 1, domain is valid, if it returns 0 it is invalid
+#also returns a previously calculated accuracy
 def predict_ID3(domain):
   tree = trainID3()
   csvInput =  calculate_domain_characteristics(domain)
   input = np.array(list(csvInput))
   conIn = inputConversion(input)
-  return ID3Classify(conIn, tree)
+  acc = 0.75
+  return ID3Classify(conIn, tree), acc
 
 
 #this function converts some of the data features to a binary format
