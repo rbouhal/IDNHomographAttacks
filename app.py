@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, jsonify
 import string
 import csv
 import os
+import hashlib
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import cross_val_score
@@ -58,22 +59,23 @@ def calculate_domain_characteristics(domain):
     characteristics = {
         'domain': domain,
         'domain_length': len(domain),
+        'domain_hash': hash_domain(domain.split('.')[0]),
         'domain_char_count': sum(c.isalpha() for c in domain.split('.')[0]),
         'domain_digit_count': sum(c.isdigit() for c in domain.split('.')[0]),
-        'repeated_chars': 1 if has_repeated_chars(domain.split('.')[0], 'alpha') else 0,
-        'repeated_digits': 1 if has_repeated_chars(domain.split('.')[0], 'digit') else 0,
         'non_ascii_char_count': count_non_ascii_chars(domain.split('.')[0]),
         'domain_tld': domain.split('.')[-1] if '.' in domain else ''
     }
     return characteristics
 
-# Helper to determine if domain has repeated characters before TLD
-def has_repeated_chars(s, char_type):
-    return any(s[i] == s[i+1] for i in range(len(s) - 1) if (s[i].isdigit() if char_type == 'digit' else s[i].isalpha()))
-
 # Helper to determine if domain has non-ascii characters before TLD
 def count_non_ascii_chars(s):
     return sum(1 for c in s if ord(c) > 127)
+
+# Helper to determine the integer hash of the part of the domain before the TLD.
+def hash_domain(domain):
+    hash_full = hashlib.sha256(domain.encode('utf-8')).hexdigest()
+    truncated_hash = hash_full[:16]  # Truncate to first 16 hex characters, which is 64 bits
+    return int(truncated_hash, 16)
 
 # Write's the domain + calculated characteristics to the respective csv file
 def write_to_csv(domain_data, validity, accuracy):
@@ -95,7 +97,7 @@ def train_model(model):
     df = pd.concat([df1, df2])
 
     #prepare the data
-    X = df[['domain_length', 'domain_char_count','domain_digit_count','repeated_chars','repeated_digits', 'non_ascii_char_count']]
+    X = df[['domain_length','domain_hash','domain_char_count','domain_digit_count','non_ascii_char_count']]
     y = df['domain_label']
 
     #split the dataset into training set and test set
@@ -108,7 +110,6 @@ def train_model(model):
     model.fit(XTrain, yTrain)
     return model, X, y
    
-
 
 # Implement ML modle here given the domain, based on prediction be sure to return 'valid' or 'invalid'
 def predict_domain_validity(domain, domain_data):
@@ -136,6 +137,7 @@ def predict_domain_validity(domain, domain_data):
 
     #return 'valid' if prediction is 1, 'invalid' otherwise
     return 'valid' if prediction[0] == 1 else 'invalid', accuracy
+
 #this function trains the ID3 decision tree with the current csv data
 def trainID3():
     df1 = pd.read_csv('static/valid-domains.csv')
@@ -219,6 +221,7 @@ def dataAnalysis(data):
     if fin == 0:
       binData[ind, 32] = 1
   return binData
+
 #this function implements the ID3 algorithm for a decision tree
 def ID3(data, catNumOptionsLst, c1, c0, tree, level):
   infoGainLst = []
@@ -323,6 +326,7 @@ def ID3(data, catNumOptionsLst, c1, c0, tree, level):
   ID3(sp1,catNumOptionsLst.copy(), sp1C1, sp1C0, tree, level + 1)
 
   return tree
+
 #helper function for calculating entropy
 def entropy(class0, class1):
   if class0  == 0:
@@ -333,10 +337,12 @@ def entropy(class0, class1):
   p1 = class1 / (class0 + class1)
   ent = -(p0 * math.log(p0, 2) + p1 * math.log(p1, 2))
   return ent
+
 #helper funciton for calculating information gain
 def informationGain(origEntro, split1, split2, class0s1, class0s2):
   info = origEntro - (split1/(split1 + split2) * entropy(class0s1, (split1 - class0s1)) + split2/(split1 + split2) * entropy(class0s2, (split2 - class0s2)))
   return info
+
 #This module takes a given ID3 tree and determine the value of a single input
 def ID3Classify(input, tree):
   skip = -1
@@ -372,6 +378,7 @@ def ID3Classify(input, tree):
       else:
         input = np.delete(input, catNum)
   return -1
+
 #converts input data into correct format for ID3 algorithm
 def inputConversion(input):
   binInput = np.zeros(34)
