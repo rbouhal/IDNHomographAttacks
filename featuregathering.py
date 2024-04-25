@@ -43,10 +43,11 @@ def process_domains(rows, label):
         row['domain_digit_count'] = sum(c.isdigit() for c in base_domain)
         row['non_ascii_char_count'] = count_non_ascii_chars(base_domain)
         row['domain_tld'] = domain[first_dot_index+1:] if first_dot_index != -1 else ''
+        row['tld_hash'] = hash_domain(domain[first_dot_index+1:] if first_dot_index != -1 else '')
         row['domain_label'] = label  # Add domain label based on file type (valid = 1, invalid = 0)
 
 def write_data(csv_file_path, rows):
-    fieldnames = ['domain', 'domain_length', 'domain_hash', 'domain_char_count', 'domain_digit_count', 'non_ascii_char_count', 'domain_tld', 'domain_label']
+    fieldnames = ['domain', 'domain_length', 'domain_hash', 'domain_char_count', 'domain_digit_count', 'non_ascii_char_count', 'domain_tld','tld_hash','domain_label']
     with open(csv_file_path, mode='w', newline='', encoding='utf-8') as file:  # Specify UTF-8 encoding
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
