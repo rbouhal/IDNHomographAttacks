@@ -50,6 +50,7 @@ def process_domain(domain):
 
     #Run the ID3 algorithm on the domain and display the new entropy
     # pred, upEntropy = predict_ID3(domain)
+    # print("entropy is:")
     # print(upEntropy)
     
     return domain_data, validity, accuracy
@@ -59,11 +60,11 @@ def calculate_domain_characteristics(domain):
     characteristics = {
         'domain': domain,
         'domain_length': len(domain),
-        'domain_hash': hash_domain(domain.split('.')[0]),
         'domain_char_count': sum(c.isalpha() for c in domain.split('.')[0]),
         'domain_digit_count': sum(c.isdigit() for c in domain.split('.')[0]),
         'non_ascii_char_count': count_non_ascii_chars(domain.split('.')[0]),
         'domain_tld': domain.split('.')[-1] if '.' in domain else '',
+        'domain_hash': hash_domain(domain.split('.')[0]),
         'tld_hash':hash_domain(domain.split('.')[-1] if '.' in domain else '')
     }
     return characteristics
@@ -98,7 +99,7 @@ def train_model(model):
     df = pd.concat([df1, df2])
 
     #prepare the data
-    X = df[['domain_length','domain_hash','domain_char_count','domain_digit_count','non_ascii_char_count', 'tld_hash']]
+    X = df[['domain_length','domain_char_count','domain_digit_count','non_ascii_char_count', 'domain_hash', 'tld_hash']]
     y = df['domain_label']
 
     #split the dataset into training set and test set
