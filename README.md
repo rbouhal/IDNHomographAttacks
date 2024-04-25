@@ -1,5 +1,5 @@
 
-  <img src="static/logo.png" alt="logo" style="height: 90px; display: flex;">
+  <img src="static/fulllogo.png" alt="logo" style="height: 90px; display: flex;">
 
 
 
