@@ -1,6 +1,6 @@
 Flask
 pandas
 numpy
-tkinter
+tk
 sklearn
 re
