@@ -1,5 +1,4 @@
 from re import X
-from tkinter import Y
 from flask import Flask, render_template, request, jsonify
 import string
 import csv
