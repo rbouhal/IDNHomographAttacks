@@ -11,27 +11,27 @@
 
 .flex-container {
     display: flex;
-    justify-content: space-around; /* Ensures space around items if they don't occupy all space */
-    align-items: center; /* Align the items vertically in the center */
-    padding: 0 500px; /* Adds padding on both sides */
-    margin-top: 20px;
+    flex-direction: row;
+    gap: 90px;
+    justify-content: center;
+    align-items: center;
 }
 
 .body-container {
-    flex-basis: 50%; /* Explicitly define the base width */
-    max-width: 900px; /* Optional: limit the content width */
+    flex-basis: 75%;
+    max-width: 250px;
+    margin: auto;
     padding: 20px;
     color: white;
     text-align: left;
 }
 
 .chart {
-    flex-basis: 50%; /* Explicitly define the base width */
+    flex-basis: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 200px;
-    position: relative;
 }
 
 .chart-percentage {
@@ -44,11 +44,112 @@
 
 
 h1 {
+    margin-top: 25px;
     padding-bottom: 6%;
+    text-align: center;
+}
+.body{
+    margin-top: -50px;
 }
 
 .body-container p {
     margin: 0;
     line-height: 1.1;
     padding-bottom: 12px;
+}
+
+.domain-contain {
+    margin: auto;
+    color: white;
+    background: #7C729F;
+    width: max-content;
+    padding: 8px;
+    border-radius: 60px;
+    box-shadow: 5px 5px 5px #2B2541;
+}
+
+.domain {
+   
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.domain img {
+    width: 30px;
+    height: 30px;
+    margin-top: 13px;
+}
+
+.validity {
+    padding: 20px 0;
+    text-align: center;
+    margin: auto;
+}
+
+
+.tg td {
+    
+    color: #000;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 20px 5px;
+    word-break: normal;
+}
+
+.tg th {
+    color: white;
+    background-color: #4b3f72;
+    border-radius: 15px 15px 0 0;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 20px 5px;
+    word-break: normal;
+}
+
+.tg .tg-bn4o {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top
+}
+
+.tg .tg-1wig, .tg .tg-fymr {
+    font-weight: bold;
+    text-align: left;
+    vertical-align: top
+}
+
+
+.tg .tg-0lax, .tg .tg-0pky {
+    text-align: right;
+    padding: 12px;
+
+    
+}
+.col p{
+    width: 200px;
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+    padding-top: 12px;
+}
+
+.tg-fymr, .tg-0pky{
+   background-color: #bdb6d6;
+}
+.tg-1wig, .tg-0lax{
+    background-color: #ADA4CC;
+}
+
+.lastl{
+    border-radius: 0 0 0 15px;
+}
+
+.lastr{
+    border-radius: 0 0 15px 0;
 }
