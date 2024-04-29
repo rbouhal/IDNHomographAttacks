@@ -64,3 +64,17 @@ button:hover {
     user-select: none;
     margin-top: 170px;
 }
+
+@media screen and (max-width: 567px) {
+    .full-center{
+        width: 90%;
+        margin: 25% auto;
+    }
+    h1{
+        margin-bottom: 50px;
+    }
+    p{
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+}
