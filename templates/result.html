@@ -20,69 +20,80 @@
   </head>
 
   <body>
-    <nav>
-      <div class="container">
-        <img src="/static/logo.png" alt="IDN Homograph Attacks Logo" class="logo" />
-
-        <div class="nav-links">
-          <a href="/" class="p-2">Home</a>
-          <a href="/howitworks" class="p-2">How it Works</a>
-          <a href="/about" class="p-2">About Us</a>
+    <header class="header">
+      <nav class="navbar">
+        <a href="/" class="nav-logo"><img src="/static/logo.png" alt="IDN Homograph Attacks Logo" class="logo" /></a>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/howitworks" class="nav-link">How it Works</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About Us</a>
+          </li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
+   
 
     <h1>Check Domain Results</h1>
 
     <div class="body">
-        <div class="domain-contain">
-            <div class="domain">
-              <img src="/static/domain.png" /> {{ domain }}
-            </div>
+      <div class="domain-contain">
+        <div class="domain">
+          <img src="/static/domain.png" /> {{ domain }}
+        </div>
+      </div>
+
+      <div class="validity">
+        {% if validity == 'valid' %}
+          <p>Is a {{ validity }} domain</p>
+        {% else %}
+          <p>Is an {{ validity }} domain</p>
+        {% endif %}
+      </div>
+
+      <div class="flex-container">
+        <table class="tg">
+          <thead>
+            <tr>
+              <th class="tg-bn4o" colspan="2">Domain Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tg-fymr">Character Count</td>
+              <td class="tg-0pky">{{ details.domain_char_count }}</td>
+            </tr>
+
+            <tr>
+              <td class="tg-1wig">Non-ASCII Characters</td>
+              <td class="tg-0lax">{{ details.non_ascii_char_count }}</td>
+            </tr>
+            <tr>
+              <td class="tg-fymr">Digit Count</td>
+              <td class="tg-0pky">{{ details.domain_digit_count }}</td>
+            </tr>
+            <tr>
+              <td class="tg-1wig lastl">Top-Level Domain</td>
+              <td class="tg-0lax lastr">.{{ details.domain_tld }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col">
+          <div class="chart" data-percent="{{ accuracy|round(2) }}">
+            <span class="chart-percentage"></span>
           </div>
-      
-          <div class="validity">
-            {% if validity == 'valid' %}
-              <p>Is a {{ validity }} domain</p>
-            {% else %}
-              <p>Is an {{ validity }} domain</p>
-            {% endif %}
-          </div>
-      
-          <div class="flex-container">
-            <table class="tg">
-              <thead>
-                <tr>
-                  <th class="tg-bn4o" colspan="2">Domain Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="tg-fymr">Character Count</td>
-                  <td class="tg-0pky">{{ details.domain_char_count }}</td>
-                </tr>
-      
-                <tr>
-                  <td class="tg-1wig">Non-ASCII Characters</td>
-                  <td class="tg-0lax">{{ details.non_ascii_char_count }}</td>
-                </tr>
-                <tr>
-                  <td class="tg-fymr">Digit Count</td>
-                  <td class="tg-0pky">{{ details.domain_digit_count }}</td>
-                </tr>
-                <tr>
-                  <td class="tg-1wig lastl">Top-Level Domain</td>
-                  <td class="tg-0lax lastr">.{{ details.domain_tld }}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="col">
-              <div class="chart" data-percent="{{ accuracy|round(2) }}">
-                <span class="chart-percentage"></span>
-              </div>
-              <p>Our algorithim has determined this domain is {{ validity }} up to a {{ accuracy|round(0) }}% accuray</p>
-            </div>
-          </div>
+          <p>Our algorithim has determined this domain is {{ validity }} up to a {{ accuracy|round(0) }}% accuray</p>
+        </div>
+      </div>
     </div>
 
     <div class="credits">
@@ -129,6 +140,18 @@
           }
         })
       })
+    </script>
+
+    <script>
+      const hamburger = document.querySelector('.hamburger')
+      const navMenu = document.querySelector('.nav-menu')
+      
+      hamburger.addEventListener('click', mobileMenu)
+      
+      function mobileMenu() {
+        hamburger.classList.toggle('active')
+        navMenu.classList.toggle('active')
+      }
     </script>
   </body>
 </html>

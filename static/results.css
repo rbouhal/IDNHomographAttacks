@@ -153,3 +153,16 @@ h1 {
 .lastr{
     border-radius: 0 0 15px 0;
 }
+
+@media screen and (max-width: 567px)  {
+    .body{
+        height: 100vh;
+    }
+    .flex-container{
+        flex-direction: column-reverse;
+        gap: 32px;
+    }
+    .domain-contain{
+        margin-top: 55px;
+    }
+}
