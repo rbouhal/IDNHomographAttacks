@@ -78,3 +78,32 @@ p {
     padding: 20px; /* Padding around content */
 }
 
+@media screen and (max-width: 567px) {
+    .body-container {
+        padding: 10px; 
+    }
+
+    .person {
+        flex-direction: column-reverse; 
+        align-items: center;
+        padding-bottom: 20px; 
+    }
+
+    .person p {
+        margin-right: 0; 
+        padding: 20px; /* Add padding for readability */
+        font-size: medium; /* Adjust font size for smaller screens */
+    }
+
+    .person img {
+        width: 180px; /* Reduce the size of the image */
+        height: 180px; /* Keep the aspect ratio the same */
+        margin-bottom: 15px; /* Add margin below the image */
+    }
+
+
+
+    .convo:after {
+        display: none;
+    }
+}
