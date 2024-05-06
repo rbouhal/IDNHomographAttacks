@@ -25,5 +25,19 @@
     align-items: center;
     height: 100%;
     user-select: none;
-    margin-top: 200px;
+}
+
+#slides{
+    margin: auto;
+    padding: 20px;
+    width: 900px;
+    height: 700px;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 567px) {
+#slides{
+    width: 345px;
+    height: 250px;
+}
 }

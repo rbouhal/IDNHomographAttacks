@@ -200,6 +200,30 @@ nav {
     text-align: center;
 }
 
+.github-link {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.github-link a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ADA4CC; /* Use your theme's button color */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.github-link a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.github-link i {
+    margin-right: 8px;
+}
+
+
 
 @media screen and (max-width: 567px) {
     .nav-menu {
