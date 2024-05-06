@@ -1,7 +1,9 @@
 
   <img src="static/fulllogo.png" alt="logo" style="height: 80px; display: flex;">
 
-  [Visit Our Website](https://homographdetector.pro/)
+## To Run This Code
+Visit our website: [Click Here](https://homographdetector.pro/)<br>
+Or enter this in your browser: https://homographdetector.pro/
 
 <img src="https://drive.google.com/uc?export=view&id=1_-yHBRthFnKFq8l_MFRfYM-6oWvKNbco" alt="Homograph" width="45%">
 We aim to tackle the issue of homograph attacks on internationalized domain names. These attacks often involve subtle modifications, such as altering individual characters or the font used in the domain name. By creating these deceptive domain names, scammers exploit unknowing users via email and various other communication methods. Here is an example bellow.
