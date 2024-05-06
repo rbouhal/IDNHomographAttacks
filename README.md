@@ -1,7 +1,7 @@
 
   <img src="static/fulllogo.png" alt="logo" style="height: 80px; display: flex;">
 
-To Run This Code, Visit Our Website:[Click Here](https://homographdetector.pro/)
+To Run This Code, visit our website: [Click Here](https://homographdetector.pro/)<br>
 Or visit: https://homographdetector.pro/
 
 <img src="https://drive.google.com/uc?export=view&id=1_-yHBRthFnKFq8l_MFRfYM-6oWvKNbco" alt="Homograph" width="45%">
